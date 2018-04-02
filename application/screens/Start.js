@@ -13,6 +13,11 @@ export default class Start extends Component {
     
     login () {
 
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'Login'
+        });
+        this.props.navigation.dispatch(navigateAction);
+
     }
 
     register () {
@@ -31,7 +36,7 @@ export default class Start extends Component {
                 <View style={{justifyContent: 'center', flex: 1}}>
                     <AppButton
                         bgColor="rgba(111, 38, 74, 0.7)"
-                        title="Entrar"
+                        title="Iniciar Sesión"
                         action={this.login.bind(this)}
                         iconName="sign-in"
                         iconSize={30}

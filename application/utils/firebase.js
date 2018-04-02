@@ -5,4 +5,4 @@ export default firebaseConfig = {
     projectId: "reactnativefirebase-880d5",
     storageBucket: "reactnativefirebase-880d5.appspot.com",
     messagingSenderId: "199883879397"
-  };
+};
