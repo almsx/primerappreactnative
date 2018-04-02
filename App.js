@@ -1,34 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import AppButton from './application/components/AppButton';
 import Preloader from './application/components/PreLoader';
+import BackgroundImage from './application/components/BackgroundImage';
+import Start from './application/screens/Start';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-          { /* Asi se agregan comentarios */ }
-          
-          { /* Comentar App Button */ }
-          <AppButton
-            bgColor="#003366"
-            title="Testing"
-            action={() => console.log("Presionaste "+1)}
-            iconName="sign-in"
-            iconSize={30}
-            iconColor="#FFF"
-          />
-          { /* <Preloader/> */ }
-      </View>
+      <BackgroundImage source={require('./assets/imagen.jpg')}>
+        <Start></Start>
+      </BackgroundImage>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#d3d3d3',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

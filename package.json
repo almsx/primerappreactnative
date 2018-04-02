@@ -7,7 +7,6 @@
     "react": "16.2.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-25.0.0.tar.gz",
     "react-native-elements": "beta",
-    "react-native-simple-toast": "^0.0.8",
     "react-navigation": "^1.5.8",
     "tcomb-form-native": "^0.6.11"
   }
