@@ -6,6 +6,10 @@ import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
 
 export default class Start extends Component {    
+
+    static navigationOptions = {
+        title: 'Inicio'
+    };
     
     login () {
 
