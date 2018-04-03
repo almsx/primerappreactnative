@@ -6,6 +6,7 @@ firebase.initializeApp(firebaseConfig);
 import {Text} from "react-native-elements";
 
 import GuestNavigation from './application/navigations/guest';
+import Home from './application/screens/Home';
 
 export default class App extends React.Component {
 	constructor() {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
 	}
 
 	async componentDidMount () {
+		/* Mantener la sesión USuario */
 		await firebase.auth().onAuthStateChanged((user) => {
 			if(user !== null) {
 				this.setState({
@@ -43,7 +45,8 @@ export default class App extends React.Component {
     	}
 
     	if(isLogged) {
-    		return (<Text>Logueado</Text>);
+    		{ /* return (<Text>Logueado</Text>); */ }
+    		return (<Home/>);
     	} else {
     		return (<GuestNavigation/>);
     	}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
 import AppButton from "../components/AppButton";
 
@@ -45,16 +45,39 @@ export default class Login extends Component {
 				.then(() => {
 					//Toast.showWithGravity("Bienvenido", Toast.LONG, Toast.BOTTOM);
 					console.log("Bienvenido al login");
+
+
+
 				})
 				.catch((error) => {
 					const errorCode = error.code;
 					const errorMessage = error.message;
 					if (errorCode === 'auth/wrong-password') {
 						//Toast.showWithGravity('Password incorrecto', Toast.LONG, Toast.BOTTOM);
-						console.log("Password incorrecto");
+						
+						Alert.alert(
+					  		'POC Drive',
+					  		'Password Incorrecto',
+					  		[
+					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')},
+					    		{text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+					  		]
+						);
+
 					} else {
 						//Toast.showWithGravity(errorMessage, Toast.LONG, Toast.BOTTOM);
 						console.log("Otro tipo de error");
+						
+						Alert.alert(
+					  		'POC Drive',
+					  		'Ese usuario no existe',
+					  		[
+					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')},
+					    		{text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+					  		],
+					  		{ cancelable: false }
+						);
+
 					}
 				});
 		}
