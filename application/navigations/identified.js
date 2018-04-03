@@ -1,31 +1,27 @@
 import React from 'react';
 import {StackNavigator} from "react-navigation";
-import StartScreen from "../screens/Start";
-import LoginScreen from "../screens/Login";
-import RegisterScreen from "../screens/Register";
 import Home from "../screens/Home";
 import ViewQRCode from "../screens/ViewQRCode";
+import ViewBarCode from "../screens/ViewBarCode";
+import Geolocation from "../screens/Geolocation";
 
 export default StackNavigator(
 	{
-		Start: {
-			screen: StartScreen
-		},
-		Login: {
-			screen: LoginScreen
-		},
-		Register: {
-			screen: RegisterScreen
-		},
 		Home: {
 			screen: Home
 		}, 
 		ViewQRCode: {
 			screen: ViewQRCode
+		},
+		ViewBarCode: {
+			screen: ViewBarCode
+		},
+		Geolocation: {
+			screen: Geolocation
 		}
 	},
 	{
-		initialRouteName: 'Start',
+		initialRouteName: 'Home',
 		navigationOptions: {
 			headerStyle: {
 				backgroundColor: '#003366'

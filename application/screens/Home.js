@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 export default class Home extends Component {    
 
     static navigationOptions = {
-        title: 'Home'
+        title: 'Bienvenido POC'
     };
 
     logoutFirebase () {
@@ -17,9 +17,28 @@ export default class Home extends Component {
 
     codigosQR () {
 
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'ViewQRCode'
+        });
+        this.props.navigation.dispatch(navigateAction);
+
     }
 
     codigosBarras () {
+
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'ViewBarCode'
+        });
+        this.props.navigation.dispatch(navigateAction);
+
+    }
+
+    geolocation () {
+
+        const navigateAction = NavigationActions.navigate({
+            routeName: 'Geolocation'
+        });
+        this.props.navigation.dispatch(navigateAction);
 
     }
 
@@ -61,7 +80,7 @@ export default class Home extends Component {
                     <AppButton
                         bgColor="rgba(32, 95, 120, 0.7)"
                         title="Geolocalización"
-                        action={this.codigosBarras.bind(this)}
+                        action={this.geolocation.bind(this)}
                         iconName="map-marker"
                         iconSize={30}
                         iconColor="#FFF"

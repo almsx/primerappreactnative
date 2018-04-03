@@ -6,7 +6,7 @@ firebase.initializeApp(firebaseConfig);
 import {Text} from "react-native-elements";
 
 import GuestNavigation from './application/navigations/guest';
-import Home from './application/screens/Home';
+import IdentifiedNavigation from './application/navigations/identified';
 
 export default class App extends React.Component {
 	constructor() {
@@ -45,8 +45,10 @@ export default class App extends React.Component {
     	}
 
     	if(isLogged) {
-    		{ /* return (<Text>Logueado</Text>); */ }
-    		return (<Home/>);
+    		{ /* return (<Text>Logueado</Text>); 
+    		return (<Home/>); */ }
+    		return (<IdentifiedNavigation/>);
+    		
     	} else {
     		return (<GuestNavigation/>);
     	}
