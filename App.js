@@ -3,7 +3,6 @@ import Preloader from './application/components/PreLoader';
 import firebaseConfig from './application/utils/firebase';
 import * as firebase from 'firebase';
 firebase.initializeApp(firebaseConfig);
-import {Text} from "react-native-elements";
 
 import GuestNavigation from './application/navigations/guest';
 import IdentifiedNavigation from './application/navigations/identified';

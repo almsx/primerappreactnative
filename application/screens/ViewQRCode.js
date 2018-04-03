@@ -8,14 +8,14 @@ import * as firebase from 'firebase';
 export default class ViewQRCode extends Component {    
 
     static navigationOptions = {
-        title: 'Lector de QR'
+        title: 'Código QR'
     };
 
     render () {
         return (
             <BackgroundImage source={require('../../assets/imagen2.jpg')}>
                 <View style={{justifyContent: 'center', flex: 1}}>
-                    <Text>Lector de QR</Text>
+                    <Text>Código de Barras</Text>
                 </View>
             </BackgroundImage>
         );
