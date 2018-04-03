@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
-import AppButton from "../components/AppButton";
+import AppButton from "../components/AppButtonRed";
 import {Card} from "react-native-elements";
 //import Toast from 'react-native-simple-toast';
 
@@ -68,7 +68,16 @@ export default class Register extends Component {
 				})
 
 				.catch(err => {
-					console.log("Error al hacer el registro");
+					
+					Alert.alert(
+					  		'POC Drive',
+					  		''+err,
+					  		[
+					    		{text: 'Aceptar', onPress: () => console.log('Ese usuario no existe en sistema.')}
+					  		],
+					  		{ cancelable: false }
+						);
+
 				})
 
 		}

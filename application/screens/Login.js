@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {View, Alert} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
-import AppButton from "../components/AppButton";
+import AppButton from "../components/AppButtonRed";
 
 import t from 'tcomb-form-native';
 import FormValidation from '../utils/validation';
 import {Card} from "react-native-elements";
 const Form = t.form.Form;
 
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 //import Toast from 'react-native-simple-toast';
 
 export default class Login extends Component {
@@ -44,36 +44,29 @@ export default class Login extends Component {
 			firebase.auth().signInWithEmailAndPassword(validate.email, validate.password)
 				.then(() => {
 					//Toast.showWithGravity("Bienvenido", Toast.LONG, Toast.BOTTOM);
-					console.log("Bienvenido al login");
-
 				})
 				.catch((error) => {
 					const errorCode = error.code;
 					const errorMessage = error.message;
 					if (errorCode === 'auth/wrong-password') {
 						//Toast.showWithGravity('Password incorrecto', Toast.LONG, Toast.BOTTOM);
-						
 						Alert.alert(
 					  		'POC Drive',
 					  		'Password Incorrecto',
 					  		[
-					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')}
+					    		{text: 'Aceptar', onPress: () => console.log('Usuario Incorrecto.')}
 					  		]
 						);
-
 					} else {
 						//Toast.showWithGravity(errorMessage, Toast.LONG, Toast.BOTTOM);
-						console.log("Otro tipo de error");
-						
 						Alert.alert(
 					  		'POC Drive',
-					  		'Ese usuario no existe',
+					  		'Ese usuario no existe, favor de verificar '+errorMessage,
 					  		[
-					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')}
+					    		{text: 'Aceptar', onPress: () => console.log('Ese usuario no existe en sistema.')}
 					  		],
 					  		{ cancelable: false }
 						);
-
 					}
 				});
 		}
@@ -83,7 +76,7 @@ export default class Login extends Component {
 		return (
 			<BackgroundImage source={require('../../assets/imagen.jpg')}>
 				<View>
-					<Card wrapperStyle={{paddingLeft: 5}} title="Iniciar sesión">
+					<Card wrapperStyle={{paddingLeft: 10}} title="Iniciar sesión">
 						<Form
 							ref="form"
 							type={this.user}
@@ -91,7 +84,7 @@ export default class Login extends Component {
 						/>
 						<AppButton
 							bgColor="rgba(111, 38, 74, 0.7)"
-							title="Entrar"
+							title="Login"
 							action={this.login.bind(this)}
 							iconName="sign-in"
 							iconSize={30}
@@ -103,3 +96,4 @@ export default class Login extends Component {
 		)
 	}
 }
+
