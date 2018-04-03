@@ -28,7 +28,7 @@ export default class AppButton extends Component {
                     />
                 }
                 text={title}
-                iconRight={true}
+                iconRight={false}
             >
             </Button>
         );

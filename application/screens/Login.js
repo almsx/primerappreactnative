@@ -46,8 +46,6 @@ export default class Login extends Component {
 					//Toast.showWithGravity("Bienvenido", Toast.LONG, Toast.BOTTOM);
 					console.log("Bienvenido al login");
 
-
-
 				})
 				.catch((error) => {
 					const errorCode = error.code;
@@ -59,8 +57,7 @@ export default class Login extends Component {
 					  		'POC Drive',
 					  		'Password Incorrecto',
 					  		[
-					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')},
-					    		{text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')}
 					  		]
 						);
 
@@ -72,8 +69,7 @@ export default class Login extends Component {
 					  		'POC Drive',
 					  		'Ese usuario no existe',
 					  		[
-					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')},
-					    		{text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+					    		{text: 'Aceptar', onPress: () => console.log('OK Pressed')}
 					  		],
 					  		{ cancelable: false }
 						);

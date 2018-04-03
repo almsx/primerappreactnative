@@ -15,6 +15,14 @@ export default class Home extends Component {
         firebase.auth().signOut();
     }
 
+    codigosQR () {
+
+    }
+
+    codigosBarras () {
+
+    }
+
     
     logout () {
 
@@ -22,8 +30,9 @@ export default class Home extends Component {
             'POC Drive',
             '¿Deseas Cerrar Sesión?',
             [
-                {text: 'Aceptar', onPress: () =>  this.logoutFirebase() },
-                {text: 'Cancelar', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+                
+                {text: 'Cancelar', onPress: () => console.log('Cancel Pressed')},
+                {text: 'Aceptar', onPress: () =>  this.logoutFirebase() }
             ]
         );
 
@@ -34,10 +43,34 @@ export default class Home extends Component {
             <BackgroundImage source={require('../../assets/imagen2.jpg')}>
                 <View style={{justifyContent: 'center', flex: 1}}>
                     <AppButton
+                        bgColor="rgba(200, 200, 50, 0.7)"
+                        title="Leer Códigos QR"
+                        action={this.codigosQR.bind(this)}
+                        iconName="qrcode"
+                        iconSize={30}
+                        iconColor="#FFF"
+                    />
+                    <AppButton
+                        bgColor="rgba(67, 67, 146, 0.7)"
+                        title="Leer Códigos de Barras"
+                        action={this.codigosBarras.bind(this)}
+                        iconName="barcode"
+                        iconSize={30}
+                        iconColor="#FFF"
+                    />
+                    <AppButton
+                        bgColor="rgba(32, 95, 120, 0.7)"
+                        title="Geolocalización"
+                        action={this.codigosBarras.bind(this)}
+                        iconName="map-marker"
+                        iconSize={30}
+                        iconColor="#FFF"
+                    />
+                    <AppButton
                         bgColor="rgba(111, 38, 74, 0.7)"
                         title="Cerrar Sesión"
                         action={this.logout.bind(this)}
-                        iconName="sign-in"
+                        iconName="sign-out"
                         iconSize={30}
                         iconColor="#FFF"
                     />
