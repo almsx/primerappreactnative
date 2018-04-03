@@ -3,7 +3,9 @@ import {View} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
 import AppButton from "../components/AppButton";
 import { NavigationActions } from 'react-navigation';
+//import Toast from 'react-native-simple-toast';
 import * as firebase from 'firebase';
+import facebook from '../utils/facebook';
 
 export default class Start extends Component {    
 
@@ -30,7 +32,25 @@ export default class Start extends Component {
     }
 
     async facebook () {
+        const {type, token} = await Expo.Facebook.logInWithReadPermissionsAsync(
+            facebook.config.application_id,
+            { permissions: facebook.config.permissions }
+        );
 
+        if(type === "success") {
+            const credentials = firebase.auth.FacebookAuthProvider.credential(token);
+            firebase.auth().signInWithCredential(credentials)
+                .catch(error => {
+                    //Toast.showWithGravity('Error accediendo con facebook', Toast.LONG, Toast.BOTTOM);
+                    console.log('error accediendo con facebook');
+                })
+        } else if(type === "cancel") {
+            //Toast.showWithGravity('Inicio de sesón cancelado', Toast.LONG, Toast.BOTTOM);
+            console.log('Inicio de sesion cancelado');
+        } else {
+            //Toast.showWithGravity('Error desconocido', Toast.LONG, Toast.BOTTOM);
+            console.log('error desconocido');
+        }
     }
 
     

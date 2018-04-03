@@ -29,7 +29,10 @@ export default class App extends React.Component {
 					loaded: true
 				});
 			}
-		})
+		});
+		
+		//Logout
+		//firebase.auth().signOut();
 	}
 
   	render() {
