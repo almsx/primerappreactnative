@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Alert} from 'react-native';
+import {View, Alert, StatusBar} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
 import AppButton from "../components/AppButtonRed";
 import {Card} from "react-native-elements";
@@ -12,6 +12,11 @@ import FormValidation from '../utils/validation';
 import * as firebase from 'firebase';
 
 export default class Register extends Component {
+
+	static navigationOptions = {
+        title: 'Registro'
+    };
+
 	constructor () {
 		super();
 
@@ -109,6 +114,7 @@ export default class Register extends Component {
 							iconColor="#fff"
 						/>
 					</Card>
+					<StatusBar backgroundColor="blue" barStyle="light-content" />
 				</View>
 			</BackgroundImage>
 		)

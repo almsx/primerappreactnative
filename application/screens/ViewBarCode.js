@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Alert, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Alert, Text, StyleSheet, Dimensions, StatusBar} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
 import AppButton from "../components/AppButton";
 import { NavigationActions } from 'react-navigation';
@@ -33,14 +33,10 @@ export default class ViewBarCode extends Component {
         let stock = variable;
         Alert.alert(
           'Código de Barras',stock
-          );
+        );
     };
 
     render() {
-        const {width2} = Dimensions.get('window');
-        const {height2} = Dimensions.get('window');
-
-        console.log(width2);
         
         return (
           <View style={styles.container}>
@@ -55,6 +51,7 @@ export default class ViewBarCode extends Component {
               width: Dimensions.get('window').width }}
               />
           }
+          <StatusBar backgroundColor="blue" barStyle="light-content" />
           </View>
           );
       }

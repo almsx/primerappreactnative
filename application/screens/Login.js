@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Alert} from 'react-native';
+import {View, Alert, StatusBar} from 'react-native';
 import BackgroundImage from "../components/BackgroundImage";
 import AppButton from "../components/AppButtonRed";
 
@@ -12,6 +12,10 @@ import * as firebase from 'firebase';
 //import Toast from 'react-native-simple-toast';
 
 export default class Login extends Component {
+
+	static navigationOptions = {
+        title: 'Login'
+    };
 
 	constructor() {
 		super();
@@ -83,7 +87,7 @@ export default class Login extends Component {
 							options={this.options}
 						/>
 						<AppButton
-							bgColor="rgba(111, 38, 74, 0.7)"
+							bgColor="rgba(111, 38, 74, 0.9)"
 							title="Login"
 							action={this.login.bind(this)}
 							iconName="sign-in"
@@ -91,6 +95,7 @@ export default class Login extends Component {
 							iconColor="#fff"
 						/>
 					</Card>
+					<StatusBar backgroundColor="blue" barStyle="light-content" />
 				</View>
 			</BackgroundImage>
 		)

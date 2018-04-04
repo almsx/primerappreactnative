@@ -106,6 +106,7 @@ _maybeRenderUrl = () => {
   Cancelar
   </Text>
   </TouchableOpacity>
+  <StatusBar backgroundColor="blue" barStyle="light-content" />
   </View>
   );
 };
