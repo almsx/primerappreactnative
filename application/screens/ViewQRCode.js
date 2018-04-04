@@ -1,23 +1,146 @@
 import React, { Component } from 'react';
-import {View, Alert, Text} from 'react-native';
-import BackgroundImage from "../components/BackgroundImage";
-import AppButton from "../components/AppButton";
-import { NavigationActions } from 'react-navigation';
-import * as firebase from 'firebase';
+import {Alert,
+  Linking,
+  Dimensions,
+  LayoutAnimation,
+  Text,
+  View,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity} from 'react-native';
+  import BackgroundImage from "../components/BackgroundImage";
+  import AppButton from "../components/AppButton";
+  import { NavigationActions } from 'react-navigation';
+  import * as firebase from 'firebase';
+  import { BarCodeScanner, Permissions } from 'expo';
 
-export default class ViewQRCode extends Component {    
+  export default class ViewQRCode extends Component {
 
     static navigationOptions = {
         title: 'Código QR'
     };
 
-    render () {
-        return (
-            <BackgroundImage source={require('../../assets/imagen2.jpg')}>
-                <View style={{justifyContent: 'center', flex: 1}}>
-                    <Text>Código de Barras</Text>
-                </View>
-            </BackgroundImage>
+    state = {
+        hasCameraPermission: null,
+        lastScannedUrl: null,
+    };
+
+    componentDidMount() {
+        this._requestCameraPermission();
+    }
+
+    _requestCameraPermission = async () => {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        this.setState({
+          hasCameraPermission: status === 'granted',
+      });
+    };
+
+    _handleBarCodeRead = result => {
+        if (result.data !== this.state.lastScannedUrl) {
+          LayoutAnimation.spring();
+          this.setState({ lastScannedUrl: result.data });
+      }
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+
+      {this.state.hasCameraPermission === null
+          ? <Text>Solicitud de Permiso de Camara</Text>
+          : this.state.hasCameraPermission === false
+          ? <Text style={{ color: '#fff' }}>
+          El permiso de Camara no fue permitido
+          </Text>
+          : <BarCodeScanner
+          onBarCodeRead={this._handleBarCodeRead}
+          style={{
+            height: Dimensions.get('window').height,
+            width: Dimensions.get('window').width,
+        }}
+        />}
+
+        {this._maybeRenderUrl()}
+
+        { /* <StatusBar hidden /> */ }
+        </View>
         );
     }
+
+    _handlePressUrl = () => {
+        Alert.alert(
+        'Información QR',
+        this.state.lastScannedUrl,
+        [
+        {
+          text: 'Aceptar',
+          onPress: () => Linking.openURL(this.state.lastScannedUrl),
+      },
+      { text: 'Cancelar', onPress: () => {} },
+      ],
+      { cancellable: false }
+      );
+  };
+
+  _handlePressCancel = () => {
+    this.setState({ lastScannedUrl: null });
+};
+
+_maybeRenderUrl = () => {
+    if (!this.state.lastScannedUrl) {
+      return;
+  }
+
+  return (
+  <View style={styles.bottomBar}>
+  <TouchableOpacity style={styles.url} onPress={this._handlePressUrl}>
+  <Text numberOfLines={1} style={styles.urlText}>
+  {this.state.lastScannedUrl}
+  </Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+  style={styles.cancelButton}
+  onPress={this._handlePressCancel}>
+  <Text style={styles.cancelButtonText}>
+  Cancelar
+  </Text>
+  </TouchableOpacity>
+  </View>
+  );
+};
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#000',
+},
+bottomBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 15,
+    flexDirection: 'row',
+},
+url: {
+    flex: 1,
+},
+urlText: {
+    color: '#fff',
+    fontSize: 20,
+},
+cancelButton: {
+    marginLeft: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+cancelButtonText: {
+    color: 'rgba(255,255,255,0.8)',
+    fontSize: 18,
+},
+});
