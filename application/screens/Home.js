@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 export default class Home extends Component {    
 
     static navigationOptions = {
-        title: 'Bienvenido POC'
+        title: 'Bienvenido'
     };
 
     logoutFirebase () {

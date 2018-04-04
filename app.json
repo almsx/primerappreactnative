@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Mi Primer App",
-    "description": "Aplicación usando React Native",
+    "name": "POC App React Native",
+    "description": "Aplicación Móvil usando React Native",
     "slug": "miprimerapp",
     "privacy": "public",
     "sdkVersion": "25.0.0",
@@ -12,7 +12,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#FFF"
+      "backgroundColor": "#000"
     },
     "ios": {
       "supportsTablet": true
