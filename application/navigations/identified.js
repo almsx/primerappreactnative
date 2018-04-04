@@ -30,7 +30,7 @@ export default StackNavigator(
 				textAlign: 'center',
 				alignSelf: 'center',
 				fontSize: 20,
-				color: '#FFF',
+				color: '#000',
 				fontWeight: 'bold'
 			}
 		}
