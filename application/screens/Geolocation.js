@@ -4,114 +4,124 @@ import BackgroundImage from "../components/BackgroundImage";
 import AppButton from "../components/AppButton";
 import { NavigationActions } from 'react-navigation';
 import * as firebase from 'firebase';
-import { Constants, MapView, Location, Permissions} from 'expo';
+import { Constants, MapView, Location, Permissions } from 'expo';
 
 export default class Geolocation extends Component {
 
     static navigationOptions = {
         title: 'Geolocalización'
     };
+  state = {
+    mapRegion: null,
+    hasLocationPermissions: false,
+    locationResult: null,
+    myUbication: null
+  };
 
-    state = {
-        location: null,
-        errorMessage: null,
-        mapRegion: {
-            latitude: 19.363900,
-            longitude: -99.202020,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-        }
-    };    
-
-    _handleMapRegionChange = mapRegion => {
-        this.setState({ mapRegion });
-    };
-
-    componentWillMount() {
-        if (Platform.OS === 'android' && !Constants.isDevice) {
-          this.setState({
-            errorMessage: 'Solo funciona en tu dispositivo :)',
-        });
-      } else {
-          this._getLocationAsync();
-      }
+  componentDidMount() {
+    this._getLocationAsync();
   }
+
+  _handleMapRegionChange = mapRegion => {
+
+    //console.log(mapRegion);
+    this.setState({ mapRegion });
+
+
+  };
 
   _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permiso de Acceso ha sido denegado.',
-    });
-  }
+   let { status } = await Permissions.askAsync(Permissions.LOCATION);
+   if (status !== 'granted') {
+     this.setState({
+       locationResult: 'Permission to access location was denied',
+     });
+   } else {
+     this.setState({ hasLocationPermissions: true });
+   }
 
-  let location = await Location.getCurrentPositionAsync({});
-  this.setState({ location });
-};
+   let location = await Location.getCurrentPositionAsync({});
+    this.setState({ locationResult: JSON.stringify(location) });
+    // Center the map on the location we just fetched.
+    this.setState({mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }});
+    //Agregamos la ubicación para el PIN
+    this.setState({myUbication: { latitude: location.coords.latitude, longitude: location.coords.longitude }});
+   
+  };
 
-render() {
+  render() {
 
-    let text = 'Espere por favor..';
+    //let lat = this.state.mapRegion.latitude;
+    //let lng = this.state.mapRegion.longitude;
+    let mm = this.state.myUbication;
+    //var my_lat;
+    //var my_lon;
+
+    var my_lat = 19.363900;
+    var my_lon = -99.202020;
+
+    try{
+        console.log("Arranque mapa "+JSON.stringify(mm.latitude));
+        my_lat = JSON.stringify(mm.latitude);
+        my_lon = JSON.stringify(mm.longitude);
+
+    } catch (err){
+        console.log("error en el mapa "+err);
+    }
+
     
-    if (this.state.errorMessage) {
-        text = this.state.errorMessage;
-    } else if (this.state.location) {
-
-        let p_latitude = JSON.stringify(this.state.location.coords.latitude);
-        let p_longitude = JSON.stringify(this.state.location.coords.longitude);
-        let p_todo = JSON.stringify(this.state.location);
-
-        text = "Latitud "+ p_latitude + " y Latitud " + p_longitude;
-        let gps = "Latitud "+ p_latitude + " y Latitud " + p_longitude + " en enteros "+parseFloat(p_latitude) + " y "+parseFloat(p_longitude);
-
-        /*
-        Alert.alert(
-          'POC Geolocalización', gps
-        );
-        */
-
-        this.setState({
-            location: null,
-            errorMessage: null,
-            mapRegion: {
-                latitude: parseFloat(p_latitude),
-                longitude: parseFloat(p_longitude),
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-            }
-        });
-
-
-    }
-
     return (
-        <View style={styles.container}>
-        { /* <Text style={styles.paragraph}>{text}</Text> */ }
+      <View style={styles.container}>
+        { /* <Text style={styles.paragraph}>
+          Pan, zoom, and tap on the map!
+        </Text> */}
         
+        {
+          this.state.locationResult === null ?
+          <Text>Finding your current location...</Text> :
+          this.state.hasLocationPermissions === false ?
+            <Text>Location permissions are not granted.</Text> :
+            this.state.mapRegion === null ?
+            <Text>Map region doesn't exist.</Text> :
             <MapView
-                style =  {{ alignSelf: 'stretch', height: Dimensions.get('window').height,
-                            width: Dimensions.get('window').width 
-                        }}
-                region = {this.state.mapRegion}
-                onRegionChange={this._handleMapRegionChange}
+              style={{ alignSelf: 'stretch', height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width  }}
+              region={this.state.mapRegion}
+              onRegionChange={this._handleMapRegionChange}
+            >
+            <MapView.Marker
+                key={1}
+                //coordinate={{latitude: 52.36, longitude: 4.88}}
+                coordinate={{latitude: my_lat, longitude: my_lon }}
+                title={"DRIVE MX"}
+                description={"Ubicación Actual"}
             />
-            <StatusBar backgroundColor="blue" barStyle="light-content" />
-        </View>
+            </MapView>
+        }
+        
+        
+        { /* <Text>
+          "ssx"
+        </Text> */ }
+      </View>
+        
     );
-    }
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#ecf0f1',
-    },
-    paragraph: {
-        margin: 24,
-        fontSize: 18,
-        textAlign: 'center',
-    }
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#34495e',
+  },
 });
