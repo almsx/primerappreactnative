@@ -78,9 +78,9 @@ export default class Geolocation extends Component {
         
         {
           this.state.locationResult === null ?
-          <Text>Finding your current location...</Text> :
+          <Text>Geolocaliza</Text> :
           this.state.hasLocationPermissions === false ?
-            <Text>Location permissions are not granted.</Text> :
+            <Text>Sin permisos localizacion.</Text> :
             this.state.mapRegion === null ?
             <Text>Map region doesn't exist.</Text> :
             <MapView
@@ -95,6 +95,7 @@ export default class Geolocation extends Component {
                 coordinate={{latitude: my_lat, longitude: my_lon }}
                 title={"DRIVE MX"}
                 description={"Ubicación Actual"}
+                image={require('../../assets/geo.png')}
             />
             </MapView>
         }
